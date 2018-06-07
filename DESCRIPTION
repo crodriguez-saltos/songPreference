@@ -1,12 +1,11 @@
 Package: songPreference
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Analyze output data from the program SingSparrow
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Carlos Antonio Rodriguez-Saltos
+Maintainer: Carlos Antonio Rodriguez-Saltos <carodr5@emory.edu>
+Description: Functions to load data from SingSparrow and estimate preference and motivation to hear a song.
+License: GPLv3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

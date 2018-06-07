@@ -1,4 +1,4 @@
-#' Load output files from SingSparrow! for a given bird
+#' Load output files from SingSparrow
 
 #' @keywords operant conditioning,singsparrow
 #' @param bird Id of the bird.
@@ -96,5 +96,6 @@ loadOC <- function(birDir, bird= NA, datalim= NA, exclude= NA,
 
   # Output----
   rownames(cntFull) <- NULL
+  cntFull <- applyFormat2018(data= cntFull)
   return(cntFull)
 }
