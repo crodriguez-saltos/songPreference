@@ -4,7 +4,7 @@
 \alias{loadOC}
 \title{Load output files from SingSparrow}
 \usage{
-loadOC(birDir, bird = NA, datalim = NA, exclude = NA,
+loadOC(birDir, bird = NULL, datalim = NA, exclude = NA,
   col_names = c("Event", "Key", "Sound", "File", "Year", "Month", "Day",
   "Hour", "Min", "Sec"))
 }

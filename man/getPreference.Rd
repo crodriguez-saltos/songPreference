@@ -4,14 +4,13 @@
 \alias{getPreference}
 \title{Estimate preference for a song}
 \usage{
-getPreference()
+getPreference(data, sound)
 }
 \arguments{
-\item{data}{Data frame containing output data from SingSparrow}
+\item{data}{Data frame containing output data from SingSparrow for a single
+bird}
 
-\item{song}{Song for which preference is measured.}
-
-\item{type}{Type of preference measurement. See details.}
+\item{sound}{Song for which preference is measured.}
 
 \item{excludeRev}{Logical. Exlude data from some days after a contingency
 reversal.}
@@ -23,8 +22,8 @@ reversal to exclude.}
 Estimate preference for a song
 }
 \details{
-All the measures based on presses for a key
-  associated with playback of a given song.
+All the measures based on presses for a key associated with playback
+  of a given song.
 }
 \keyword{SingSparrow}
 \keyword{conditioning,}

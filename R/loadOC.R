@@ -17,7 +17,7 @@
 #'   human-readable format.
 #' @export
 
-loadOC <- function(birDir, bird= NA, datalim= NA, exclude= NA,
+loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
                    col_names = c('Event',
                                  'Key',
                                  'Sound',
@@ -30,6 +30,12 @@ loadOC <- function(birDir, bird= NA, datalim= NA, exclude= NA,
     fileNames <- dir(birDir)
   }else{
     fileNames <- dir(birDir)[-exclude]
+  }
+
+  # Exclude mockStr files----
+  mockstr <- grep(pattern = "mockStr.txt$", x = fileNames)
+  if (length(mockstr)){
+    fileNames <- fileNames[-mockstr]
   }
 
   fileContent <- as.list(fileNames)
@@ -93,6 +99,12 @@ loadOC <- function(birDir, bird= NA, datalim= NA, exclude= NA,
   rm(dates, times, z)
 
   cntFull <- cntFull[order(cntFull$Time),]
+
+  # Add name of the bird----
+  if (is.null(bird)){
+    bird <- basename(birDir)
+  }
+  cntFull$id <- bird
 
   # Output----
   rownames(cntFull) <- NULL
