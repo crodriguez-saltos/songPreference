@@ -1,4 +1,4 @@
-#' Get record indexes when playback of a song or more were exhausted
+#' Get record indexes at which playback of one or more songs were exhausted
 #'
 #' @keywords operant conditioning, quota exhausted.
 #' @param data Dataframe containing SingSparrow data.
