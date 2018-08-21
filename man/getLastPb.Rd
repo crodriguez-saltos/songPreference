@@ -2,7 +2,7 @@
 % Please edit documentation in R/getLastPb.R
 \name{getLastPb}
 \alias{getLastPb}
-\title{Get record indexes when playback of a song or more were exhausted}
+\title{Get record indexes at which playback of one or more songs were exhausted}
 \usage{
 getLastPb(data, quota = 30)
 }
@@ -12,7 +12,7 @@ getLastPb(data, quota = 30)
 \item{quota}{Quota for daily playback of songs.}
 }
 \description{
-Get record indexes when playback of a song or more were exhausted
+Get record indexes at which playback of one or more songs were exhausted
 }
 \keyword{conditioning,}
 \keyword{exhausted.}

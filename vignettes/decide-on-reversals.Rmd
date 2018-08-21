@@ -1,0 +1,43 @@
+---
+title: "Decide whether to run a reversal"
+author: "Carlos Antonio Rodríguez-Saltos"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+We will analyze SingSparrow data to decide whether the key contingencies must be switched.
+
+## Import data
+
+We will assume that the last rows of the dataframe contain the most recent keypresses.
+
+```{r}
+library(songPreference)
+data <- loadOC(birDir = file.path(find.package("songPreference"), "ZF1536"))
+```
+
+## Check whether to switch contingencies
+
+The main function here is `shouldISwitch`. It will print out the decission of whether to switch or not.
+
+```{r}
+reversal_decision <- shouldISwitch(data= data, 
+                                   alpha = 0.05, 
+                                   consecutive_days = 5, 
+                                   filtype= "onesong")
+```
+
+The first two columns are the daily press counts for A and B. The third column contains the p value from the statistical test of significant difference between the key press counts. The row numbers are a way of representing dates. They correspond to the number of days since 1970-01-01. This type of numeric representation is usually a convenient way for R to store information on dates. 
+
+Finally, the last line contains the decision to run or not to run a reversal.

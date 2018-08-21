@@ -14,7 +14,11 @@
 #'   both songs were exhausted.
 #' @export
 
-filterByLastPb <- function(data, filtype, ...){
+filterByLastPb <- function(data, filtype= NA, ...){
+  if (is.na(filtype)){
+    return(data)
+  }
+
   # Find last playbacks of song----
   lastSongs <- getLastPb(data= data, ...)
 

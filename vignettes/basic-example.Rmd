@@ -1,0 +1,104 @@
+---
+title: "Basic example"
+author: "Carlos Antonio Rodríguez-Saltos"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In this example, we will report the daily key presses that a bird has made. The data will be analyzed only until one of the songs was exhausted each day.
+
+## Importing data
+First, we will import our data. To do so, we need only the name of the directory containing the files to be imported.
+
+`songPreference` already comes with sample data from one bird, named ZF1536. We will import the data from this bird. For that, we need to know where the installation directory of `songPreference` resides.
+
+```{r}
+songPreference_dir <- find.package(package = "songPreference")
+data_dir <- file.path(songPreference_dir, "ZF1536")
+print(data_dir)
+```
+
+Next, we import the data using the command `loadOC` from `songPreference`. To use this command, we need to load `songPreference`.
+
+```{r}
+library(songPreference)
+data <- loadOC(birDir = data_dir)
+head(data)
+```
+
+## Filtering data
+We will now filter the data to keep only records until one of the songs was exhausted, each day. This is done by using the function `filterByLastPb `.
+
+```{r}
+data_filtered <- filterByLastPb(data = data, filtype = "onesong")
+```
+
+## Getting the press count
+A summary of daily presses for each key can be obtained using the function `getKeyCount`.
+
+```{r}
+daily_summary <- getKeyCount(data = data_filtered)
+head(daily_summary)
+```
+
+The date is in numerical format. See `?Date` for more information.
+
+## Plotting the proportion of daily presses
+We will now plot the above data. We will build a plot of stacked areas representing the proportion of presses for each key along time.
+
+First, we need to ccalculate the proportion of presses for key A.
+
+```{r}
+proportion_A <- apply(X = daily_summary, MARGIN= 1, FUN = function(x) {
+  x[1]/(x[1] + x[2])
+})
+head(proportion_A)
+```
+
+Now we need to convert the dates in numerical format to a more legible format.
+
+```{r}
+names(proportion_A) <- as.Date(as.numeric(names(proportion_A)), 
+                               origin= "1970-01-01")
+head(proportion_A)
+```
+
+To facilitate the construction of the plots, we will arrange the data into a dataframe.
+```{r}
+proportions <- data.frame(date= as.Date(names(proportion_A)), 
+                          A= proportion_A, 
+                          B= 1 - proportion_A)
+head(proportions)
+```
+
+The dataframe is in wide format. It must be converted to long format before plotting.
+
+```{r}
+library(reshape2)
+proportions_long <- melt(data = proportions, id= "date", value.name = "proportion",
+                         variable.name = "key")
+head(proportions_long)
+```
+
+Now we can make the plot.
+
+```{r fig.width=7}
+library(ggplot2)
+p <- ggplot(data = proportions_long, mapping = aes(x = date, y = proportion, fill= key))
+p <- p + geom_area()
+print(p)
+```
+
+## Exporting the data
+Data can be exported through the use of a basic function such as `write.csv`. Check the help file for that function for more information. You can export either `data`, `daily_summary`, or `proportions_long` in this way.

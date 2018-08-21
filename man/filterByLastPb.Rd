@@ -4,7 +4,7 @@
 \alias{filterByLastPb}
 \title{Filter SingSparrow OC according to last playbacks}
 \usage{
-filterByLastPb(data, filtype, ...)
+filterByLastPb(data, filtype = NA, ...)
 }
 \arguments{
 \item{data}{Dataframe containing SingSparrow data.}

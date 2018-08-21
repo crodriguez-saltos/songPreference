@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Carlos Antonio Rodríguez-Saltos" />
+
+<meta name="date" content="2018-08-21" />
+
+<title>Basic example</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Basic example</h1>
+<h4 class="author"><em>Carlos Antonio Rodríguez-Saltos</em></h4>
+<h4 class="date"><em>2018-08-21</em></h4>
+
+
+
+<p>In this example, we will report the daily key presses that a bird has made. The data will be analyzed only until one of the songs was exhausted each day.</p>
+<div id="importing-data" class="section level2">
+<h2>Importing data</h2>
+<p>First, we will import our data. To do so, we need only the name of the directory containing the files to be imported.</p>
+<p><code>songPreference</code> already comes with sample data from one bird, named ZF1536. We will import the data from this bird. For that, we need to know where the installation directory of <code>songPreference</code> resides.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">songPreference_dir &lt;-<span class="st"> </span><span class="kw">find.package</span>(<span class="dt">package =</span> <span class="st">&quot;songPreference&quot;</span>)
+data_dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(songPreference_dir, <span class="st">&quot;ZF1536&quot;</span>)
+<span class="kw">print</span>(data_dir)
+<span class="co">#&gt; [1] &quot;/home/carlosr-work/R/x86_64-pc-linux-gnu-library/3.4/songPreference/ZF1536&quot;</span></code></pre></div>
+<p>Next, we import the data using the command <code>loadOC</code> from <code>songPreference</code>. To use this command, we need to load <code>songPreference</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(songPreference)
+data &lt;-<span class="st"> </span><span class="kw">loadOC</span>(<span class="dt">birDir =</span> data_dir)
+<span class="kw">head</span>(data)
+<span class="co">#&gt;   Event Key Sound File sound1 sound2                Time     id      dates</span>
+<span class="co">#&gt; 1     1   B     2    1  alien foster 2016-01-27 17:30:44 ZF1536 2016-01-27</span>
+<span class="co">#&gt; 2     1   B     2    1  alien foster 2016-01-28 10:13:30 ZF1536 2016-01-28</span>
+<span class="co">#&gt; 3     2   B     2    1  alien foster 2016-01-28 10:16:24 ZF1536 2016-01-28</span>
+<span class="co">#&gt; 4     3   B     2    1  alien foster 2016-01-28 11:57:32 ZF1536 2016-01-28</span>
+<span class="co">#&gt; 5     4   B     2    1  alien foster 2016-01-28 12:00:26 ZF1536 2016-01-28</span>
+<span class="co">#&gt; 6     5   B     1    1  alien foster 2016-01-28 12:19:37 ZF1536 2016-01-28</span></code></pre></div>
+</div>
+<div id="filtering-data" class="section level2">
+<h2>Filtering data</h2>
+<p>We will now filter the data to keep only records until one of the songs was exhausted, each day. This is done by using the function <code>filterByLastPb</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data_filtered &lt;-<span class="st"> </span><span class="kw">filterByLastPb</span>(<span class="dt">data =</span> data, <span class="dt">filtype =</span> <span class="st">&quot;onesong&quot;</span>)
+<span class="co">#&gt; Warning in min(which(played == quota)): no non-missing arguments to min;</span>
+<span class="co">#&gt; returning Inf</span>
+
+<span class="co">#&gt; Warning in min(which(played == quota)): no non-missing arguments to min;</span>
+<span class="co">#&gt; returning Inf</span>
+<span class="co">#&gt; Warning in filterByLastPb(data = data, filtype = &quot;onesong&quot;): NAs introduced</span>
+<span class="co">#&gt; by coercion to integer range</span></code></pre></div>
+</div>
+<div id="getting-the-press-count" class="section level2">
+<h2>Getting the press count</h2>
+<p>A summary of daily presses for each key can be obtained using the function <code>getKeyCount</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">daily_summary &lt;-<span class="st"> </span><span class="kw">getKeyCount</span>(<span class="dt">data =</span> data_filtered)
+<span class="kw">head</span>(daily_summary)
+<span class="co">#&gt;        </span>
+<span class="co">#&gt; dates   A  B</span>
+<span class="co">#&gt;   16828 1 66</span>
+<span class="co">#&gt;   16829 8 66</span>
+<span class="co">#&gt;   16830 6 61</span>
+<span class="co">#&gt;   16831 0 61</span>
+<span class="co">#&gt;   16832 1 69</span>
+<span class="co">#&gt;   16833 4 73</span></code></pre></div>
+<p>The date is in numerical format. See <code>?Date</code> for more information.</p>
+</div>
+<div id="plotting-the-proportion-of-daily-presses" class="section level2">
+<h2>Plotting the proportion of daily presses</h2>
+<p>We will now plot the above data. We will build a plot of stacked areas representing the proportion of presses for each key along time.</p>
+<p>First, we need to ccalculate the proportion of presses for key A.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">proportion_A &lt;-<span class="st"> </span><span class="kw">apply</span>(<span class="dt">X =</span> daily_summary, <span class="dt">MARGIN=</span> <span class="dv">1</span>, <span class="dt">FUN =</span> <span class="cf">function</span>(x) {
+  x[<span class="dv">1</span>]<span class="op">/</span>(x[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>x[<span class="dv">2</span>])
+})
+<span class="kw">head</span>(proportion_A)
+<span class="co">#&gt;      16828      16829      16830      16831      16832      16833 </span>
+<span class="co">#&gt; 0.01492537 0.10810811 0.08955224 0.00000000 0.01428571 0.05194805</span></code></pre></div>
+<p>Now we need to convert the dates in numerical format to a more legible format.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(proportion_A) &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">as.numeric</span>(<span class="kw">names</span>(proportion_A)), 
+                               <span class="dt">origin=</span> <span class="st">&quot;1970-01-01&quot;</span>)
+<span class="kw">head</span>(proportion_A)
+<span class="co">#&gt; 2016-01-28 2016-01-29 2016-01-30 2016-01-31 2016-02-01 2016-02-02 </span>
+<span class="co">#&gt; 0.01492537 0.10810811 0.08955224 0.00000000 0.01428571 0.05194805</span></code></pre></div>
+<p>To facilitate the construction of the plots, we will arrange the data into a dataframe.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">proportions &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">date=</span> <span class="kw">as.Date</span>(<span class="kw">names</span>(proportion_A)), 
+                          <span class="dt">A=</span> proportion_A, 
+                          <span class="dt">B=</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>proportion_A)
+<span class="kw">head</span>(proportions)
+<span class="co">#&gt;                  date          A         B</span>
+<span class="co">#&gt; 2016-01-28 2016-01-28 0.01492537 0.9850746</span>
+<span class="co">#&gt; 2016-01-29 2016-01-29 0.10810811 0.8918919</span>
+<span class="co">#&gt; 2016-01-30 2016-01-30 0.08955224 0.9104478</span>
+<span class="co">#&gt; 2016-01-31 2016-01-31 0.00000000 1.0000000</span>
+<span class="co">#&gt; 2016-02-01 2016-02-01 0.01428571 0.9857143</span>
+<span class="co">#&gt; 2016-02-02 2016-02-02 0.05194805 0.9480519</span></code></pre></div>
+<p>The dataframe is in wide format. It must be converted to long format before plotting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(reshape2)
+proportions_long &lt;-<span class="st"> </span><span class="kw">melt</span>(<span class="dt">data =</span> proportions, <span class="dt">id=</span> <span class="st">&quot;date&quot;</span>, <span class="dt">value.name =</span> <span class="st">&quot;proportion&quot;</span>,
+                         <span class="dt">variable.name =</span> <span class="st">&quot;key&quot;</span>)
+<span class="kw">head</span>(proportions_long)
+<span class="co">#&gt;         date key proportion</span>
+<span class="co">#&gt; 1 2016-01-28   A 0.01492537</span>
+<span class="co">#&gt; 2 2016-01-29   A 0.10810811</span>
+<span class="co">#&gt; 3 2016-01-30   A 0.08955224</span>
+<span class="co">#&gt; 4 2016-01-31   A 0.00000000</span>
+<span class="co">#&gt; 5 2016-02-01   A 0.01428571</span>
+<span class="co">#&gt; 6 2016-02-02   A 0.05194805</span></code></pre></div>
+<p>Now we can make the plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> proportions_long, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> proportion, <span class="dt">fill=</span> key))
+p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_area</span>()
+<span class="kw">print</span>(p)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="export-the-data" class="section level1">
+<h1>Export the data</h1>
+<p>Data can be exported through the use of a basic function such as <code>write.csv</code>. Check the help file for that function for more information. You can export either <code>data</code>, <code>daily_summary</code>, or <code>proportions_long</code> in this way.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
