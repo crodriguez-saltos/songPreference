@@ -37,6 +37,20 @@ data <- loadOC(birDir = data_dir)
 head(data)
 ```
 
+## Estimate age
+We can easily estimate age if we know the date when the bird was hatched. We need to provide that date.
+
+```{r}
+hatching_date <- "2015-12-18"
+```
+
+Then, we just need to execute the following code.
+
+```{r}
+hatching_date <- as.POSIXct(hatching_date, format= "%Y-%m-%d")
+data$age <- data$dates - as.Date(hatching_date)
+```
+
 ## Filtering data
 We will now filter the data to keep only records until one of the songs was exhausted, each day. This is done by using the function `filterByLastPb `.
 
@@ -86,7 +100,7 @@ The dataframe is in wide format. It must be converted to long format before plot
 
 ```{r}
 library(reshape2)
-proportions_long <- melt(data = proportions, id= "date", value.name = "proportion",
+proportions_long <- melt(data = proportions, id= "age", value.name = "proportion",
                          variable.name = "key")
 head(proportions_long)
 ```
@@ -95,7 +109,7 @@ Now we can make the plot.
 
 ```{r fig.width=7}
 library(ggplot2)
-p <- ggplot(data = proportions_long, mapping = aes(x = date, y = proportion, fill= key))
+p <- ggplot(data = proportions_long, mapping = aes(x = age, y = proportion, fill= key))
 p <- p + geom_area()
 print(p)
 ```

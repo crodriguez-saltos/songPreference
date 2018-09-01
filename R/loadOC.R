@@ -100,6 +100,17 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
 
   cntFull <- cntFull[order(cntFull$Time),]
 
+  # We will add a column that shows the corresponding label to the key that was
+  # pressed
+  labels <- cntFull[,c("soundA", "soundB")]
+  label_index <- sapply(cntFull$Key, function(x) which(c("A", "B") == x))
+  label_selected <- rep("", nrow(cntFull))
+  for (i in 1:length(label_selected)){
+    label_selected[i] <- labels[i, label_index[i]]
+  }
+  cntFull$Key_label <- as.factor(label_selected)
+  rm(labels, label_index)
+
   # Add name of the bird----
   if (is.null(bird)){
     bird <- basename(birDir)
