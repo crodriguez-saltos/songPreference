@@ -12,9 +12,14 @@
 #' @export
 
 getKeyCount <- function(data){
-  press_matrix <- plyr::daply(.data = data, .variables = "dates",
+  if (is.element("age", colnames(data))){
+    variables <- "age"
+  }else{
+    variables <- "dates"
+  }
+  press_matrix <- plyr::daply(.data = data, .variables = variables,
                              .fun = function(x){
-                               c(summary(x$Key))
+                               c(summary(x$Key_label))
                              })
   return(press_matrix)
 }

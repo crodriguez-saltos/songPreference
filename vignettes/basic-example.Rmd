@@ -74,25 +74,37 @@ We will now plot the above data. We will build a plot of stacked areas represent
 First, we need to ccalculate the proportion of presses for key A.
 
 ```{r}
-proportion_A <- apply(X = daily_summary, MARGIN= 1, FUN = function(x) {
+proportion_songA <- apply(X = daily_summary, MARGIN= 1, FUN = function(x) {
   x[1]/(x[1] + x[2])
 })
-head(proportion_A)
+head(proportion_songA)
 ```
 
-Now we need to convert the dates in numerical format to a more legible format.
+Now, if the names of the vector are dates, we need to convert the dates in numerical format to a more legible format.
 
 ```{r}
-names(proportion_A) <- as.Date(as.numeric(names(proportion_A)), 
+dates_are_names <- is.element("dates", names(attr(daily_summary, "dimnames")))
+if (dates_are_names){
+  names(proportion_songA) <- as.Date(as.numeric(names(proportion_songA)), 
                                origin= "1970-01-01")
-head(proportion_A)
+}
+
+head(proportion_songA)
 ```
 
 To facilitate the construction of the plots, we will arrange the data into a dataframe.
 ```{r}
-proportions <- data.frame(date= as.Date(names(proportion_A)), 
-                          A= proportion_A, 
-                          B= 1 - proportion_A)
+if (dates_are_names){
+  proportions <- data.frame(date= as.Date(names(proportion_songA)))
+}else{
+  proportions <- data.frame(age= as.numeric(names(proportion_songA)))
+}
+
+proportions$songA <- proportion_songA
+proportions$songB <- 1 - proportion_songA
+
+colnames(proportions)[2] <- colnames(daily_summary)[1]
+colnames(proportions)[3] <- colnames(daily_summary)[2]
 head(proportions)
 ```
 
@@ -100,8 +112,9 @@ The dataframe is in wide format. It must be converted to long format before plot
 
 ```{r}
 library(reshape2)
-proportions_long <- melt(data = proportions, id= "age", value.name = "proportion",
-                         variable.name = "key")
+id <- ifelse(test = dates_are_names, yes = "date", no = "age")
+proportions_long <- melt(data = proportions, id= id, value.name = "proportion",
+                         variable.name = "key_label")
 head(proportions_long)
 ```
 
@@ -109,8 +122,10 @@ Now we can make the plot.
 
 ```{r fig.width=7}
 library(ggplot2)
-p <- ggplot(data = proportions_long, mapping = aes(x = age, y = proportion, fill= key))
-p <- p + geom_area()
+p <- ggplot(data = proportions_long, mapping = aes(x = eval(parse(text= id)), 
+                                                   y = proportion, 
+                                                   fill= key_label))
+p <- p + geom_area() + xlab(id)
 print(p)
 ```
 
