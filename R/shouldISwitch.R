@@ -41,7 +41,7 @@ shouldISwitch <- function(data, alpha= 0.05, consecutive_days = 5, quota= 30,
   underplayed <- any(pbPerSongDay < quota)
 
   if (underplayed){
-    print("Error. At least one song was not exhausted on any of last dates.")
+    print("Error. At least one song was not exhausted on any of the last dates.")
     return()
   }
 
