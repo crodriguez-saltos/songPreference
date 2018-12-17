@@ -49,6 +49,8 @@ Then, we just need to execute the following code.
 ```{r}
 hatching_date <- as.POSIXct(hatching_date, format= "%Y-%m-%d")
 data$age <- data$dates - as.Date(hatching_date)
+
+head(data)
 ```
 
 ## Filtering data

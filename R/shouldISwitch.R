@@ -6,6 +6,7 @@
 #' @param alpha Alpha level for stablishing a significant preference.
 #' @param consecutive_days Number of consecutive days when preference for a song
 #'   must be significant.
+#' @param quota Quota of playbacks per day.
 #' @param ... Arguments passed to filterByLastPb.
 #'
 #' @details the function extracts the last `consecutive_days` rows of `data` and
@@ -17,18 +18,35 @@
 #'   In some reinforcement schedules, reversals are recommended only once. Check
 #'   with your reinforcement schedule to do a reversal before accepting the
 #'   recommendation given by this function.
+#'
+#'   The function will exit prematurely if the quota of playbacks for any song
+#'   has not been reached in any of the days analyzed.
 #' @export
 
-shouldISwitch <- function(data, alpha= 0.05, consecutive_days = 5,
+shouldISwitch <- function(data, alpha= 0.05, consecutive_days = 5, quota= 30,
                           ...){
-  # Filter data---
-  data <- filterByLastPb(data= data, ...)
 
   # Extract the last days----
   uniq_dates <- unique(data$dates)
   date_range <- (length(uniq_dates) - consecutive_days + 1):length(uniq_dates)
   recent_dates <- uniq_dates[date_range]
   data_filtered <- data[is.element(data$dates, recent_dates),]
+
+  # Check whether the song quota has been reached----
+  data_filtered$Sound <- as.factor(data_filtered$Sound)
+  pbPerSongDay <- plyr::daply(.data= data_filtered,
+                              .variables = plyr::.(dates),
+                              .fun = function(x) summary(x$Sound))
+  pbPerSongDay <- pbPerSongDay[,is.element(colnames(pbPerSongDay), c("1", "2"))]
+  underplayed <- any(pbPerSongDay < quota)
+
+  if (underplayed){
+    print("Error. At least one song was not exhausted on any of last dates.")
+    return()
+  }
+
+  # Filter data---
+  data_filtered <- filterByLastPb(data= data_filtered, ...)
 
   # Check whether there is preference for one key----
   press_matrix <- getKeyCount(data= data_filtered)

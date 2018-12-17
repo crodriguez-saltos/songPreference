@@ -5,7 +5,7 @@
 \title{Take the decission  of whether to set-up a contingency reversal based on the
 history of key presses.}
 \usage{
-shouldISwitch(data, alpha = 0.05, consecutive_days = 5, ...)
+shouldISwitch(data, alpha = 0.05, consecutive_days = 5, quota = 30, ...)
 }
 \arguments{
 \item{data}{Dataframe to analyze.}
@@ -14,6 +14,8 @@ shouldISwitch(data, alpha = 0.05, consecutive_days = 5, ...)
 
 \item{consecutive_days}{Number of consecutive days when preference for a song
 must be significant.}
+
+\item{quota}{Quota of playbacks per day.}
 
 \item{...}{Arguments passed to filterByLastPb.}
 }
@@ -31,6 +33,9 @@ the function extracts the last `consecutive_days` rows of `data` and
   In some reinforcement schedules, reversals are recommended only once. Check
   with your reinforcement schedule to do a reversal before accepting the
   recommendation given by this function.
+
+  The function will exit prematurely if the quota of playbacks for any song
+  has not been reached in any of the days analyzed.
 }
 \keyword{conditioning,}
 \keyword{operant}
