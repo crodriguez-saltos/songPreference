@@ -6,6 +6,8 @@
 #' @param datalim Number of records from each day to be kept
 #' @param exlude Indexes of records to exclude.
 #' @param col_names Names of the columns in SingSparrow output.
+#' @param fmt Format of keypress data file.
+#' @param zerokeyrm Logical. Should rows with values of zero for key be removed?
 
 #' @details If bird is not provided, then it is assumed to be the basename of
 #'   birDir.
@@ -13,6 +15,9 @@
 #'   The exclude indexes apply to the dataframe output by the plotting function.
 #'   The indexes should be retrieved after preliminary exploration of the
 #'   database.
+#'
+#'   Possible formats of the keypress data file are "2015" or "2019".
+#'
 #' @return A database containing values from SingSparrow! output in
 #'   human-readable format.
 #' @export
@@ -23,7 +28,7 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
                                  'Sound',
                                  'File',
                                  'Year', 'Month', 'Day','Hour', 'Min', 'Sec'
-                   )){
+                   ), fmt= "2015", zerokeyrm= F){
 
   # Import files----
   if (is.na(any(exclude))){
@@ -40,8 +45,14 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
 
   fileContent <- as.list(fileNames)
   for (i in 1:length(fileNames)){
-    fileContent[[i]] <- read.table(file.path(birDir, fileNames[[i]]),
-                                   header = TRUE, sep = ',')
+    if (fmt == "2015"){
+      fileContent[[i]] <- read.table(file.path(birDir, fileNames[[i]]),
+                                     header = TRUE, sep = ',')
+    }else if (fmt == "2019"){
+      fileContent[[i]] <- read.table(file.path(birDir, fileNames[[i]]),
+                                     header = FALSE, sep = ',')
+    }
+
     fileContent[[i]] <- fileContent[[i]][-1,]  # Eliminates the first row,
     # which contains only zeros.
     if (!is.na(datalim)){
@@ -84,6 +95,10 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
   # Format data frame----
   col_names <- c(col_names, 'soundA', 'soundB')
   colnames(cntFull) <- col_names
+
+  if (zerokeyrm){
+    cntFull <- cntFull[cntFull$Key != 0,]
+  }
 
   cntFull$Key <- factor(c('A','B')[cntFull$Key], levels= c('A', 'B'))
 
