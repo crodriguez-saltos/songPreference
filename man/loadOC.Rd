@@ -5,8 +5,7 @@
 \title{Load output files from SingSparrow}
 \usage{
 loadOC(birDir, bird = NULL, datalim = NA, exclude = NA,
-  col_names = c("Event", "Key", "Sound", "File", "Year", "Month", "Day",
-  "Hour", "Min", "Sec"))
+  fmt = "2015", zerokeyrm = T)
 }
 \arguments{
 \item{birDir}{Folder containing output files.}
@@ -15,7 +14,9 @@ loadOC(birDir, bird = NULL, datalim = NA, exclude = NA,
 
 \item{datalim}{Number of records from each day to be kept}
 
-\item{col_names}{Names of the columns in SingSparrow output.}
+\item{fmt}{Format of keypress data file.}
+
+\item{zerokeyrm}{Logical. Should rows with values of zero for key be removed?}
 
 \item{exlude}{Indexes of records to exclude.}
 }
@@ -33,6 +34,8 @@ If bird is not provided, then it is assumed to be the basename of
   The exclude indexes apply to the dataframe output by the plotting function.
   The indexes should be retrieved after preliminary exploration of the
   database.
+
+  Possible formats of the keypress data file are "2015" or "2019".
 }
 \keyword{conditioning,singsparrow}
 \keyword{operant}

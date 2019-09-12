@@ -5,7 +5,6 @@
 #' @param birDir Folder containing output files.
 #' @param datalim Number of records from each day to be kept
 #' @param exlude Indexes of records to exclude.
-#' @param col_names Names of the columns in SingSparrow output.
 #' @param fmt Format of keypress data file.
 #' @param zerokeyrm Logical. Should rows with values of zero for key be removed?
 
@@ -23,12 +22,23 @@
 #' @export
 
 loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
-                   col_names = c('Event',
-                                 'Key',
-                                 'Sound',
-                                 'File',
-                                 'Year', 'Month', 'Day','Hour', 'Min', 'Sec'
-                   ), fmt= "2015", zerokeyrm= F){
+                   fmt= "2015", zerokeyrm= T){
+
+  # Define column names for master data frame
+  if (fmt == "2015"){
+    col_names <- c('Event',
+                  'Key',
+                  'Sound',
+                  'File',
+                  'Year', 'Month', 'Day','Hour', 'Min', 'Sec'
+    )
+  }else if (fmt == "2019"){
+    col_names <- c('Key',
+                   'Sound',
+                   'File',
+                   'Year', 'Month', 'Day','Hour', 'Min', 'Sec'
+    )
+  }
 
   # Import files----
   if (is.na(any(exclude))){

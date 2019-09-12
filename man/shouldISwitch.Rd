@@ -5,7 +5,8 @@
 \title{Take the decission  of whether to set-up a contingency reversal based on the
 history of key presses.}
 \usage{
-shouldISwitch(data, alpha = 0.05, consecutive_days = 5, quota = 30, ...)
+shouldISwitch(data, alpha = 0.05, consecutive_days = 5, quota = 30,
+  ...)
 }
 \arguments{
 \item{data}{Dataframe to analyze.}
