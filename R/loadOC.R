@@ -15,7 +15,7 @@
 #'   The indexes should be retrieved after preliminary exploration of the
 #'   database.
 #'
-#'   Possible formats of the keypress data file are "2015" or "2019".
+#'   Possible formats of the keypress data file are "2015", "2015ctr" or "2019".
 #'
 #' @return A database containing values from SingSparrow! output in
 #'   human-readable format.
@@ -31,6 +31,12 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
                   'Sound',
                   'File',
                   'Year', 'Month', 'Day','Hour', 'Min', 'Sec'
+    )
+  }else if (fmt == "2015ctr"){
+    col_names <- c('Event',
+                   'KeyL',
+                   'KeyR',
+                   'Year', 'Month', 'Day','Hour', 'Min', 'Sec'
     )
   }else if (fmt == "2019"){
     col_names <- c('Key',
@@ -55,7 +61,7 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
 
   fileContent <- as.list(fileNames)
   for (i in 1:length(fileNames)){
-    if (fmt == "2015"){
+    if (fmt == "2015" || fmt == "2015ctr"){
       fileContent[[i]] <- read.table(file.path(birDir, fileNames[[i]]),
                                      header = TRUE, sep = ',')
     }else if (fmt == "2019"){
@@ -106,11 +112,13 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
   col_names <- c(col_names, 'soundA', 'soundB')
   colnames(cntFull) <- col_names
 
-  if (zerokeyrm){
+  if (zerokeyrm & fmt != "2015ctr"){
     cntFull <- cntFull[cntFull$Key != 0,]
   }
 
-  cntFull$Key <- factor(c('A','B')[cntFull$Key], levels= c('A', 'B'))
+  if (fmt != "2015ctr"){
+    cntFull$Key <- factor(c('A','B')[cntFull$Key], levels= c('A', 'B'))
+  }
 
   dates <- paste(cntFull$Year, cntFull$Month, cntFull$Day, sep = '/')
   times <- paste(cntFull$Hour, cntFull$Min,
@@ -125,16 +133,18 @@ loadOC <- function(birDir, bird= NULL, datalim= NA, exclude= NA,
 
   cntFull <- cntFull[order(cntFull$Time),]
 
-  # We will add a column that shows the corresponding label to the key that was
+  # We will add a column that shows the association of the key that was
   # pressed
-  labels <- cntFull[,c("soundA", "soundB")]
-  label_index <- sapply(cntFull$Key, function(x) which(c("A", "B") == x))
-  label_selected <- rep("", nrow(cntFull))
-  for (i in 1:length(label_selected)){
-    label_selected[i] <- labels[i, label_index[i]]
+  if (fmt != "2015ctr"){
+    labels <- cntFull[,c("soundA", "soundB")]
+    label_index <- sapply(cntFull$Key, function(x) which(c("A", "B") == x))
+    label_selected <- rep("", nrow(cntFull))
+    for (i in 1:length(label_selected)){
+      label_selected[i] <- labels[i, label_index[i]]
+    }
+    cntFull$Key_label <- as.factor(label_selected)
+    rm(labels, label_index)
   }
-  cntFull$Key_label <- as.factor(label_selected)
-  rm(labels, label_index)
 
   # Add name of the bird----
   if (is.null(bird)){
